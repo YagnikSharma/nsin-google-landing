@@ -13,7 +13,7 @@ export function useLive(): LiveState {
         const cfg: LiveConfig = await fetch("/live.json", { cache: "no-store" }).then((r) => r.json());
         if (!cfg.apiUrl) throw new Error("no live url");
         const ctrl = new AbortController();
-        const timer = setTimeout(() => ctrl.abort(), 8000);
+        const timer = setTimeout(() => ctrl.abort(), 15000); // Cloud Run may cold-start
         const health = await fetch(`${cfg.apiUrl}/health`, { signal: ctrl.signal }).then((r) => r.json());
         clearTimeout(timer);
         if (!cancelled) setState({ status: health?.database?.connected ? "live" : "offline", config: cfg, model: health?.ai_features?.gemini?.model });
