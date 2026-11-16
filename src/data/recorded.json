@@ -1,0 +1,575 @@
+{
+  "recorded_at": "2026-11-17 01:01 IST",
+  "results": {
+    "triage": {
+      "hinglish_sos": {
+        "input": "Papa gir gaye hain aur saans nahi le pa rahe, B-204 jaldi aao",
+        "output": {
+          "parsed_category": "medical",
+          "extracted_location": "B-204",
+          "suggested_priority": "P1_CRITICAL",
+          "triage_reasoning": "The report indicates a person is unconscious or unable to breathe, which is a life-threatening emergency.",
+          "missing_critical_info": [
+            "Exact building name or society name.",
+            "Current consciousness level of the patient."
+          ],
+          "immediate_safety_checklist": [
+            "Call 112 now if anyone is in immediate danger; responders are being alerted.",
+            "Check if the person is breathing and has a pulse.",
+            "If not breathing, begin CPR immediately.",
+            "Clear the area around the person to allow airflow.",
+            "Keep the door unlocked for responders."
+          ],
+          "retrieved_civic_protocols": [
+            {
+              "title": "Community SOS & Personal Distress Protocol",
+              "source": "Municipal Civic Safety Standard Operating Procedure v3.2",
+              "protocol_snippet": "P1_CRITICAL. 3) Responders are notified with real-time audio-visual alerts and must acknowledge within 120 seconds. 4) The resident's emergency medical and allergy notes are made visible only to certified medical responders. 5) Responders must remain in communication with civic dispatch until on-scene arrival is logged. False alarms must be verified by two-party authentication before closure.",
+              "matched_by": "bm25+vector"
+            },
+            {
+              "title": "Incident Priority Classification Matrix & Triage Standards",
+              "source": "Unified Civic Incident Classification System (UCICS)",
+              "protocol_snippet": "Incident Priority Classification Matrix & Triage Standards. Incidents must be triaged into four distinct levels: P1_CRITICAL: Active physical danger, medical emergency, violence, or direct SOS. Requires immediate response (<5 min). P2_HIGH: Suspicious individuals attempting property entry, aggressive animals, missing child overdue >15m, fire hazards. (<15 min). P3_MODERATE: Non-violent disputes, street lighting outages, property damage, delayed elder assistance. (<1 hour). P4_ADVISORY:",
+              "matched_by": "bm25+vector"
+            },
+            {
+              "title": "Senior Citizen Wellness Checks and Assistance Procedures",
+              "source": "Civic Elder Care & Ageing-in-Place Guidelines",
+              "protocol_snippet": "is established within 60 minutes, a certified community volunteer or medical responder is dispatched for a physical welfare knock-and-verify. 4) Responders are trained to check for common home hazards, medication continuity, and hydration. Urgent medical assistance requests take precedence over routine domestic chores.",
+              "matched_by": "bm25"
+            }
+          ],
+          "advisory_notice": "AI-assisted guidance is strictly advisory. Final decisions remain with verified human responders.",
+          "persisted_analysis_id": null,
+          "escalated": true,
+          "workflow_steps": [
+            "intake:hazard",
+            "triage:P3_MODERATE",
+            "gemini:P1_CRITICAL",
+            "escalated",
+            "knowledge:3"
+          ],
+          "rule_priority": "P3_MODERATE",
+          "ai_engine": "gemini:gemini-3.1-flash-lite",
+          "gemini": {
+            "category": "medical",
+            "priority": "P1_CRITICAL",
+            "reasoning": "The report indicates a person is unconscious or unable to breathe, which is a life-threatening emergency.",
+            "responder_briefing": "An elderly male has collapsed and is experiencing respiratory distress at B-204. Immediate medical assistance is required.",
+            "immediate_actions": [
+              "Check if the person is breathing and has a pulse.",
+              "If not breathing, begin CPR immediately.",
+              "Clear the area around the person to allow airflow.",
+              "Keep the door unlocked for responders."
+            ],
+            "missing_information": [
+              "Exact building name or society name.",
+              "Current consciousness level of the patient."
+            ],
+            "detected_language": "Hinglish",
+            "extracted_location": "B-204"
+          },
+          "gemini_error": null,
+          "_ms": 7173
+        }
+      },
+      "hinglish_knife": {
+        "input": "Ek aadmi chaku leke gate 2 pe ghoom raha hai, bacche bahar khel rahe hain",
+        "output": {
+          "parsed_category": "suspicious_activity",
+          "extracted_location": "Gate 2",
+          "suggested_priority": "P1_CRITICAL",
+          "triage_reasoning": "The presence of an armed individual near children poses an immediate threat to life and safety.",
+          "missing_critical_info": [
+            "Specific gate number or building name",
+            "Description of the individual",
+            "Current status of the children"
+          ],
+          "immediate_safety_checklist": [
+            "Call 112 now if anyone is in immediate danger; responders are being alerted.",
+            "Bring all children indoors immediately.",
+            "Lock all doors and windows.",
+            "Do not confront the individual.",
+            "Call local police emergency services."
+          ],
+          "retrieved_civic_protocols": [
+            {
+              "title": "Child Journey Monitoring and Delay Escalation Guidelines",
+              "source": "Guardian Network Child Protection Framework, Section 4",
+              "protocol_snippet": "Child Journey Monitoring and Delay Escalation Guidelines. Guardian-monitored child journeys track travel between verified safe waypoints (home, school, activity center). 1) Expected travel times include a calibrated 15-minute buffer. 2) If no check-in is received by expected arrival time, an automated gentle push reminder is sent to the child profile. 3) At +15 minutes overdue without communication, the status transitions",
+              "matched_by": "bm25+vector"
+            },
+            {
+              "title": "Incident Priority Classification Matrix & Triage Standards",
+              "source": "Unified Civic Incident Classification System (UCICS)",
+              "protocol_snippet": "Incident Priority Classification Matrix & Triage Standards. Incidents must be triaged into four distinct levels: P1_CRITICAL: Active physical danger, medical emergency, violence, or direct SOS. Requires immediate response (<5 min). P2_HIGH: Suspicious individuals attempting property entry, aggressive animals, missing child overdue >15m, fire hazards. (<15 min). P3_MODERATE: Non-violent disputes, street lighting outages, property damage, delayed elder assistance. (<1 hour). P4_ADVISORY:",
+              "matched_by": "bm25"
+            },
+            {
+              "title": "Community Hazard Identification, Verification, and Containment",
+              "source": "Urban Safety Task Force Hazard Catalog 2026",
+              "protocol_snippet": "are displayed with a distinct warning badge. High-severity hazards trigger an automatic detour notification for child journeys and pedestrian routes passing within 200 meters. The community admin escalates unresolved hazards directly to municipal ward engineers.",
+              "matched_by": "vector"
+            }
+          ],
+          "advisory_notice": "AI-assisted guidance is strictly advisory. Final decisions remain with verified human responders.",
+          "persisted_analysis_id": null,
+          "escalated": true,
+          "workflow_steps": [
+            "intake:hazard",
+            "triage:P3_MODERATE",
+            "gemini:P1_CRITICAL",
+            "escalated",
+            "knowledge:3"
+          ],
+          "rule_priority": "P3_MODERATE",
+          "ai_engine": "gemini:gemini-3.1-flash-lite",
+          "gemini": {
+            "category": "suspicious_activity",
+            "priority": "P1_CRITICAL",
+            "reasoning": "The presence of an armed individual near children poses an immediate threat to life and safety.",
+            "responder_briefing": "An individual armed with a knife is roaming near Gate 2 where children are playing. Immediate intervention is required to secure the area and protect the children.",
+            "immediate_actions": [
+              "Bring all children indoors immediately.",
+              "Lock all doors and windows.",
+              "Do not confront the individual.",
+              "Call local police emergency services."
+            ],
+            "missing_information": [
+              "Specific gate number or building name",
+              "Description of the individual",
+              "Current status of the children"
+            ],
+            "detected_language": "Hinglish",
+            "extracted_location": "Gate 2"
+          },
+          "gemini_error": null,
+          "_ms": 10788
+        }
+      },
+      "elder": {
+        "input": "My elderly neighbour has not answered her door or phone since last night. She lives alone.",
+        "output": {
+          "parsed_category": "elder_welfare",
+          "extracted_location": null,
+          "suggested_priority": "P2_HIGH",
+          "triage_reasoning": "An elderly person living alone is unreachable for an extended period, indicating a potential medical emergency or fall.",
+          "missing_critical_info": [
+            "Exact house number or apartment details",
+            "Name of the elderly resident",
+            "Contact details of family members"
+          ],
+          "immediate_safety_checklist": [
+            "Try calling her emergency contacts if known.",
+            "Check if any windows or back doors are accessible.",
+            "Do not force entry unless you see signs of distress.",
+            "Wait for the volunteer responder to arrive."
+          ],
+          "retrieved_civic_protocols": [
+            {
+              "title": "Senior Citizen Wellness Checks and Assistance Procedures",
+              "source": "Civic Elder Care & Ageing-in-Place Guidelines",
+              "protocol_snippet": "Senior Citizen Wellness Checks and Assistance Procedures. Elder welfare monitoring operates through morning and evening check-in windows. 1) Residents or their designated caregivers set preferred check-in hours. 2) If a check-in is missed, the system flags a 'missed_checkin' status and prompts trusted family contacts. 3) If no contact is established within 60 minutes, a certified community volunteer or medical responder",
+              "matched_by": "bm25+vector"
+            },
+            {
+              "title": "Child Journey Monitoring and Delay Escalation Guidelines",
+              "source": "Guardian Network Child Protection Framework, Section 4",
+              "protocol_snippet": "child profile. 3) At +15 minutes overdue without communication, the status transitions to 'delayed' and guardians receive an urgent notification. 4) At +30 minutes overdue or if the route deviates significantly, a P2_HIGH Child Welfare Alert is registered, notifying neighbourhood patrol units along the registered route corridor. Responders must verify last-known waypoint camera or witness records.",
+              "matched_by": "bm25"
+            },
+            {
+              "title": "Safe Transit and Women's Night Corridor Policy",
+              "source": "Metropolitan Women's Safety Initiative Protocol #11",
+              "protocol_snippet": "Safe Transit and Women's Night Corridor Policy. Women residents traveling during late hours (10:00 PM to 6:00 AM) can activate 'Safe Transit Companion' mode. This shares temporary live breadcrumbs exclusively with chosen trusted contacts and nearby active community patrols. If the user remains stationary in an unlit zone for over 5 minutes, an unobtrusive safety prompt is sent. If unanswered",
+              "matched_by": "bm25"
+            }
+          ],
+          "advisory_notice": "AI-assisted guidance is strictly advisory. Final decisions remain with verified human responders.",
+          "persisted_analysis_id": null,
+          "escalated": false,
+          "workflow_steps": [
+            "intake:elder_welfare",
+            "triage:P2_HIGH",
+            "gemini:P2_HIGH",
+            "knowledge:3"
+          ],
+          "rule_priority": "P2_HIGH",
+          "ai_engine": "gemini:gemini-3.1-flash-lite",
+          "gemini": {
+            "category": "elder_welfare",
+            "priority": "P2_HIGH",
+            "reasoning": "An elderly person living alone is unreachable for an extended period, indicating a potential medical emergency or fall.",
+            "responder_briefing": "An elderly resident is unresponsive to knocks and calls since last night. Welfare check required immediately.",
+            "immediate_actions": [
+              "Try calling her emergency contacts if known.",
+              "Check if any windows or back doors are accessible.",
+              "Do not force entry unless you see signs of distress.",
+              "Wait for the volunteer responder to arrive."
+            ],
+            "missing_information": [
+              "Exact house number or apartment details",
+              "Name of the elderly resident",
+              "Contact details of family members"
+            ],
+            "detected_language": "English",
+            "extracted_location": null
+          },
+          "gemini_error": null,
+          "_ms": 5888
+        }
+      },
+      "streetlight": {
+        "input": "The streetlight on Lane 4 has been broken for a week and the road is dark at night",
+        "output": {
+          "parsed_category": "hazard",
+          "extracted_location": "Lane 4 has been broken for a week and th",
+          "suggested_priority": "P3_MODERATE",
+          "triage_reasoning": "A broken streetlight creates a safety hazard due to poor visibility, but there is no immediate threat to life or property.",
+          "missing_critical_info": [
+            "Specific house number or landmark near the broken light",
+            "Contact details of the reporter"
+          ],
+          "immediate_safety_checklist": [
+            "Use a flashlight when walking in the area at night",
+            "Avoid walking alone in the dark section",
+            "Report the outage to the local municipal electricity department"
+          ],
+          "retrieved_civic_protocols": [
+            {
+              "title": "Community Hazard Identification, Verification, and Containment",
+              "source": "Urban Safety Task Force Hazard Catalog 2026",
+              "protocol_snippet": "Community Hazard Identification, Verification, and Containment. Civic hazards reported by residents (such as broken streetlights, waterlogging, fallen wires, aggressive strays, or blocked egress routes) are published to the neighbourhood map only after verified or corroborated by at least two independent residents or one verified patrol responder. Unverified hazards are displayed with a distinct warning badge. High-severity hazards trigger an automatic",
+              "matched_by": "bm25+vector"
+            },
+            {
+              "title": "Safe Transit and Women's Night Corridor Policy",
+              "source": "Metropolitan Women's Safety Initiative Protocol #11",
+              "protocol_snippet": "Safe Transit and Women's Night Corridor Policy. Women residents traveling during late hours (10:00 PM to 6:00 AM) can activate 'Safe Transit Companion' mode. This shares temporary live breadcrumbs exclusively with chosen trusted contacts and nearby active community patrols. If the user remains stationary in an unlit zone for over 5 minutes, an unobtrusive safety prompt is sent. If unanswered",
+              "matched_by": "bm25"
+            }
+          ],
+          "advisory_notice": "AI-assisted guidance is strictly advisory. Final decisions remain with verified human responders.",
+          "persisted_analysis_id": null,
+          "escalated": false,
+          "workflow_steps": [
+            "intake:hazard",
+            "triage:P3_MODERATE",
+            "gemini:P3_MODERATE",
+            "knowledge:2"
+          ],
+          "rule_priority": "P3_MODERATE",
+          "ai_engine": "gemini:gemini-3.1-flash-lite",
+          "gemini": {
+            "category": "hazard",
+            "priority": "P3_MODERATE",
+            "reasoning": "A broken streetlight creates a safety hazard due to poor visibility, but there is no immediate threat to life or property.",
+            "responder_briefing": "A streetlight on Lane 4 has been non-functional for a week, causing poor visibility at night.",
+            "immediate_actions": [
+              "Use a flashlight when walking in the area at night",
+              "Avoid walking alone in the dark section",
+              "Report the outage to the local municipal electricity department"
+            ],
+            "missing_information": [
+              "Specific house number or landmark near the broken light",
+              "Contact details of the reporter"
+            ],
+            "detected_language": "English",
+            "extracted_location": "Lane 4"
+          },
+          "gemini_error": null,
+          "_ms": 4840
+        }
+      }
+    },
+    "briefing": {
+      "triage": {
+        "parsed_category": "elder_welfare",
+        "extracted_location": null,
+        "missing_critical_info": [
+          "Exact address or house number",
+          "Name of the elderly resident",
+          "Contact number for the resident"
+        ],
+        "suggested_priority": "P2_HIGH",
+        "rule_priority": "P2_HIGH",
+        "triage_reasoning": "An elderly person is unreachable and unresponsive, which poses a potential health or safety risk.",
+        "immediate_safety_checklist": [
+          "Try calling the resident again.",
+          "Check if any lights are on or if there is any sound from inside.",
+          "Contact other neighbours to see if they have seen her.",
+          "Wait for the volunteer responder to arrive before attempting to force entry."
+        ],
+        "retrieved_civic_protocols": [
+          {
+            "title": "Senior Citizen Wellness Checks and Assistance Procedures",
+            "source": "Civic Elder Care & Ageing-in-Place Guidelines",
+            "protocol_snippet": "Senior Citizen Wellness Checks and Assistance Procedures. Elder welfare monitoring operates through morning and evening check-in windows. 1) Residents or their designated caregivers set preferred check-in hours. 2) If a check-in is missed, the system flags a 'missed_checkin' status and prompts trusted family contacts. 3) If no contact is established within 60 minutes, a certified community volunteer or medical responder",
+            "matched_by": "bm25+vector"
+          },
+          {
+            "title": "Child Journey Monitoring and Delay Escalation Guidelines",
+            "source": "Guardian Network Child Protection Framework, Section 4",
+            "protocol_snippet": "child profile. 3) At +15 minutes overdue without communication, the status transitions to 'delayed' and guardians receive an urgent notification. 4) At +30 minutes overdue or if the route deviates significantly, a P2_HIGH Child Welfare Alert is registered, notifying neighbourhood patrol units along the registered route corridor. Responders must verify last-known waypoint camera or witness records.",
+            "matched_by": "bm25"
+          },
+          {
+            "title": "Safe Transit and Women's Night Corridor Policy",
+            "source": "Metropolitan Women's Safety Initiative Protocol #11",
+            "protocol_snippet": "Safe Transit and Women's Night Corridor Policy. Women residents traveling during late hours (10:00 PM to 6:00 AM) can activate 'Safe Transit Companion' mode. This shares temporary live breadcrumbs exclusively with chosen trusted contacts and nearby active community patrols. If the user remains stationary in an unlit zone for over 5 minutes, an unobtrusive safety prompt is sent. If unanswered",
+            "matched_by": "bm25"
+          }
+        ],
+        "escalated": false,
+        "workflow_steps": [
+          "intake:elder_welfare",
+          "triage:P2_HIGH",
+          "gemini:P2_HIGH",
+          "knowledge:3"
+        ],
+        "ai_engine": "gemini:gemini-3.1-flash-lite",
+        "gemini": {
+          "category": "elder_welfare",
+          "priority": "P2_HIGH",
+          "reasoning": "An elderly person is unreachable and unresponsive, which poses a potential health or safety risk.",
+          "responder_briefing": "An elderly resident has not been seen or heard from since last night. Welfare check required at the residence.",
+          "immediate_actions": [
+            "Try calling the resident again.",
+            "Check if any lights are on or if there is any sound from inside.",
+            "Contact other neighbours to see if they have seen her.",
+            "Wait for the volunteer responder to arrive before attempting to force entry."
+          ],
+          "missing_information": [
+            "Exact address or house number",
+            "Name of the elderly resident",
+            "Contact number for the resident"
+          ],
+          "detected_language": "English",
+          "extracted_location": null
+        },
+        "gemini_error": null,
+        "execution_duration_sec": 12.226,
+        "advisory_notice": "AI-assisted guidance is strictly advisory. Final decisions remain with verified human responders."
+      },
+      "briefing": {
+        "summary": "An elderly resident is unresponsive to door and phone contact since last night. This indicates a potential health or safety risk requiring immediate welfare verification.",
+        "advice": "1. Verify if the resident has a designated caregiver or family contact on file.\n2. Attempt to establish contact with the resident's listed emergency contacts.\n3. If no contact is established within 60 minutes, dispatch a certified community volunteer or medical responder to the residence.",
+        "source": "Senior Citizen Wellness Checks and Assistance Procedures",
+        "grounded": true,
+        "cited_protocols": [
+          "Senior Citizen Wellness Checks and Assistance Procedures",
+          "Child Journey Monitoring and Delay Escalation Guidelines",
+          "Safe Transit and Women's Night Corridor Policy"
+        ],
+        "model": "gemini-3.1-flash-lite",
+        "backend": "gemini-developer-api",
+        "duration_sec": 3.16
+      },
+      "briefing_error": null,
+      "_ms": 15409
+    },
+    "guidance": {
+      "results": [
+        {
+          "document_id": "DOC-ELDER-003",
+          "title": "Senior Citizen Wellness Checks and Assistance Procedures",
+          "category": "elder_care",
+          "audience": [
+            "seniors",
+            "caregivers",
+            "responders"
+          ],
+          "excerpt": "Elder welfare monitoring operates through morning and evening check-in windows. 1) Residents or their designated caregivers set preferred check-in hours. 2) If a check-in is missed, the system flags a 'missed_checkin' status and prompts trusted family contacts. 3) If no contact is established within 60 minutes, a certified community volunteer or medical responder is dispatched for a physical welfare knock-and-verify. 4) Responders are trained to check for common home hazards, medication continuity, and hydration. Urgent medical assistance requests take precedence over routine domestic chores.",
+          "cited_passage": "is established within 60 minutes, a certified community volunteer or medical responder is dispatched for a physical welfare knock-and-verify. 4) Responders are trained to check for common home hazards, medication continuity, and hydration. Urgent medical assistance requests take precedence over routine domestic chores.",
+          "source": "Civic Elder Care & Ageing-in-Place Guidelines",
+          "updated_at": "2026-06-10",
+          "relevance_score": 1,
+          "matched_by": "vector",
+          "vector_distance": 0.3717
+        }
+      ],
+      "found": true,
+      "count": 1,
+      "retrieval_mode": "hybrid (BM25 + Gemini embeddings in pgvector)",
+      "filters": null,
+      "top_source": "Civic Elder Care & Ageing-in-Place Guidelines",
+      "query": "my grandmother is not answering her phone"
+    },
+    "insights": {
+      "total_incidents": 15,
+      "active_incidents": 3,
+      "resolved_incidents": 12,
+      "average_response_time_minutes": 17.25,
+      "incidents_by_type": {
+        "elder_welfare": 2,
+        "medical": 2,
+        "hazard": 5,
+        "suspicious_activity": 5,
+        "child_alert": 1
+      },
+      "incidents_by_priority": {
+        "P1_CRITICAL": 2,
+        "P2_HIGH": 6,
+        "P3_MODERATE": 7
+      },
+      "active_hazards": [
+        {
+          "id": 1,
+          "reported_by_id": 1,
+          "title": "Malfunctioning Streetlight Near Park Alley",
+          "hazard_type": "dark_street",
+          "severity": "medium",
+          "address": "Lane 3, Behind Central Community Park",
+          "latitude": 12.973,
+          "longitude": 77.596,
+          "status": "verified",
+          "created_at": "2026-11-16T19:30:54.402218"
+        },
+        {
+          "id": 2,
+          "reported_by_id": 2,
+          "title": "Open Construction Pit Without Barricade",
+          "hazard_type": "road_block",
+          "severity": "high",
+          "address": "Corner of 7th Cross and Outer Ring Feeder",
+          "latitude": 12.9705,
+          "longitude": 77.592,
+          "status": "active",
+          "created_at": "2026-11-16T19:30:54.402218"
+        }
+      ],
+      "safety_health_score": 76,
+      "ai_safety_advisory": "Normal neighbourhood safety index. 2 infrastructure hazards under municipal review. Residents are advised to use designated Safe Transit routes after dusk.",
+      "analytics_engine": "PostgreSQL SQL on Cloud SQL (PERCENTILE_CONT, RANK OVER)",
+      "window_days": 30,
+      "response_times": [
+        {
+          "priority": "P1_CRITICAL",
+          "incidents": 2,
+          "acknowledged": 2,
+          "avg_ack_minutes": 1.75,
+          "median_ack_minutes": 1.75,
+          "p90_ack_minutes": 1.95,
+          "avg_resolve_minutes": 65,
+          "ack_target_minutes": 2
+        },
+        {
+          "priority": "P2_HIGH",
+          "incidents": 6,
+          "acknowledged": 6,
+          "avg_ack_minutes": 7.5,
+          "median_ack_minutes": 7,
+          "p90_ack_minutes": 10.5,
+          "avg_resolve_minutes": 639,
+          "ack_target_minutes": 15
+        },
+        {
+          "priority": "P3_MODERATE",
+          "incidents": 7,
+          "acknowledged": 6,
+          "avg_ack_minutes": 32.17,
+          "median_ack_minutes": 31.5,
+          "p90_ack_minutes": 45,
+          "avg_resolve_minutes": 776,
+          "ack_target_minutes": 60
+        }
+      ],
+      "hotspots": [
+        {
+          "rank": 1,
+          "location": "Oak Ridge Apartments, Basement 2, Green Glen Layout",
+          "incidents": 4,
+          "open_incidents": 2,
+          "last_reported": "2026-11-16T19:05:54.390293"
+        },
+        {
+          "rank": 2,
+          "location": "Lane 3, Behind Central Community Park",
+          "incidents": 3,
+          "open_incidents": 0,
+          "last_reported": "2026-10-23T23:15:00"
+        },
+        {
+          "rank": 3,
+          "location": "Corner of 7th Cross and Outer Ring Feeder",
+          "incidents": 2,
+          "open_incidents": 0,
+          "last_reported": "2026-11-10T19:15:00"
+        },
+        {
+          "rank": 3,
+          "location": "Flat 12, Shanti Senior Residency",
+          "incidents": 2,
+          "open_incidents": 0,
+          "last_reported": "2026-11-01T07:15:00"
+        },
+        {
+          "rank": 5,
+          "location": "School Bus Stop, 5th Main",
+          "incidents": 1,
+          "open_incidents": 1,
+          "last_reported": "2026-11-16T18:00:54.390293"
+        }
+      ],
+      "incidents_by_hour": {
+        "7": 1,
+        "8": 1,
+        "9": 1,
+        "13": 1,
+        "18": 2,
+        "19": 2,
+        "20": 1,
+        "21": 1,
+        "22": 3,
+        "23": 2
+      },
+      "sla_breaches": 1
+    },
+    "health": {
+      "status": "healthy",
+      "service": "Neighbourhood Safety Intelligence Network",
+      "version": "2.0.0",
+      "environment": "development",
+      "database": {
+        "mode": "postgresql",
+        "connected": true,
+        "driver": "psycopg",
+        "details": {
+          "connected": true,
+          "server_time": "2026-11-16 19:31:46.711971+00:00",
+          "server_version": "PostgreSQL 16.16 (Debian 16.16-1.pgdg12+1)",
+          "database": "nsin",
+          "pgvector": "0.8.7",
+          "cloud_sql_socket": false
+        },
+        "vector_search": {
+          "enabled": true,
+          "library": "pgvector (HNSW, cosine)",
+          "model": "gemini-embedding-001",
+          "dimensions": 768,
+          "reason": null
+        },
+        "hybrid_retrieval": {
+          "hybrid": true,
+          "passages": 24,
+          "table": "protocol_passages",
+          "embedding_model": "gemini-embedding-001",
+          "reason": null
+        }
+      },
+      "ai_features": {
+        "gemini": {
+          "configured": true,
+          "triage": true,
+          "model": "gemini-3.8-flash",
+          "embedding_model": "gemini-embedding-001",
+          "backend": "gemini-developer-api"
+        },
+        "protocol_retrieval": "hybrid (BM25 + Gemini embeddings in pgvector)",
+        "incident_vector_search": "active",
+        "rule_triage": "active"
+      }
+    }
+  }
+}
