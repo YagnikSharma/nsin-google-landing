@@ -19,7 +19,7 @@ const EXAMPLES: { key: keyof typeof recorded.results.triage; label: string }[] =
   { key: "streetlight", label: "English · hazard" },
 ];
 
-const NAV = [["Problem", "#problem"], ["Gemini", "#gemini"], ["Live demo", "#demo"], ["Google Cloud", "#cloud"], ["Proof", "#proof"], ["Business", "#business"], ["Team", "#team"]];
+const NAV = [["Problem", "#problem"], ["Gemini", "#gemini"], ["Live demo", "#demo"], ["Google Cloud", "#cloud"], ["Proof", "#proof"], ["Business", "#business"], ["Team", "#team"], ["Pitch", "/pitch"]];
 const TICKER = ["Gemini · structured JSON", "gemini-embedding-001 · 768 dims", "Cloud Run", "Cloud SQL · PostgreSQL 16", "pgvector · HNSW", "Secret Manager", "Cloud Build", "Firebase Hosting", "Google AI Studio", "Google Antigravity", "English · Hindi · Hinglish", "85 tests · 0 mocks"];
 const PRIO: Record<string, string> = { P1_CRITICAL: "text-g-red", P2_HIGH: "text-[#e37400] dark:text-g-yellow", P3_MODERATE: "text-brand", P4_ADVISORY: "text-ink-3" };
 const pretty = (p?: string) => (p ?? "").replace("_", " · ");
