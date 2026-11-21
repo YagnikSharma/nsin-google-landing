@@ -1,6 +1,7 @@
 export const LINKS = {
   repo: "https://github.com/YagnikSharma/Task_Force_141_Google_Startup_Buildathon_India_2026",
-  site: "https://github.com/YagnikSharma/nsin-google-landing",
+  site: "https://nsin-app.web.app",
+  landingRepo: "https://github.com/YagnikSharma/nsin-google-landing",
   app: "/app/",
   setup: "https://github.com/YagnikSharma/Task_Force_141_Google_Startup_Buildathon_India_2026/blob/main/docs/GOOGLE_CLOUD_SETUP.md",
 };
@@ -82,3 +83,55 @@ export const TEAM = [
 ];
 
 export const ROADMAP = ["Gemini Live voice SOS", "Gemma on-device triage", "Google Agent Skills for dispatch", "Firebase Auth + Cloud Messaging", "Google Maps Platform geofencing"];
+
+export const COMPANY = {
+  team: "Team Task Force 141",
+  startup: "DYS Healthtech Pvt Ltd",
+  incubator: "Incubated at KCIISF, AKTU",
+  hub: "Innovation Hub, Uttar Pradesh",
+};
+
+/** Startup achievements (photos in /public/achievements, cropped to remove private details). */
+export const ACHIEVEMENTS = [
+  { title: "Best Pitch Award", event: "IDE Bootcamp 2026 · Nodal Centre", by: "Ministry of Education · Wadhwani Foundation", photo: "/achievements/ide_bootcamp_win.webp", tone: "g-yellow" },
+  { title: "Winner", event: "IIT Bombay Eureka! Zonal Pitchfest 2026", by: "E-Cell IIT Bombay", photo: "/achievements/eureka_zonal.webp", tone: "brand" },
+  { title: "Winner", event: "Smart India Hackathon 2026 · Internal round", by: "Ministry of Education's Innovation Cell", photo: "/achievements/sih_2026_internal_hackathon.webp", tone: "g-green" },
+  { title: "Finalist", event: "IEEE YESIST12 2026", by: "Selected from 2,000+ submissions", photo: "/achievements/yesist12_finalist.webp", tone: "g-red", fit: "contain" },
+  { title: "4.5 / 5 rating", event: "Wadhwani Venture Journey · Ignite Bootcamp", by: "Rated by the IDE jury", photo: "/achievements/wadhwani_rating.webp", tone: "brand", fit: "contain" },
+] as const;
+
+/** Research tab: what we found, who needs it most, how we built it, and what we rejected. */
+export const RESEARCH = {
+  found: [
+    { n: "4,45,256", t: "crimes against women in India in 2022, about 51 an hour", src: "NCRB, Crime in India 2022", href: "https://www.tribuneindia.com/news/india/every-hour-52-crimes-against-women-cases-registered-in-india-in-2022-569041" },
+    { n: "14,158", t: "in Delhi alone: the highest of 19 metros, 3rd year running", src: "NCRB 2022", href: "https://business-standard.com/india-news/ncrb-wrap-crime-rate-dips-over-1k-crimes-against-women-reported-daily-123120701125_1.html" },
+    { n: "~10%", t: "lower survival for every minute CPR is delayed in a cardiac arrest", src: "American Heart Association", href: "https://www.heart.org/en/news/2023/02/01/11-things-to-know-to-save-a-life-with-cpr" },
+    { n: "~8 min", t: "average Delhi 112 response: fast, but a neighbour is two doors away", src: "The Daily Pioneer", href: "https://dailypioneer.com/page1/safety-first-delhi-police-step-up-womens-protection" },
+    { n: "1.25 → 1.8 lakh", t: "gated communities in India (FY21 → FY31); only ~25% use any digital platform", src: "Redseer", href: "https://redseer.com/reports/indias-gated-communities-the-900bn-consumer-cluster/" },
+    { n: "14.9 → 34.7 cr", t: "Indians aged 60+ (2022 → 2050)", src: "UNFPA India Ageing Report 2023", href: "https://india.unfpa.org/en/news/india-ageing-elderly-make-20-population-2050-unfpa-report" },
+  ],
+  segments: [
+    { who: "Housing societies (RWAs)", why: "Already responsible for safety and already pay for guards, but have no plan for the first five minutes.", first: true },
+    { who: "Workplaces with women on night shifts", why: "Delhi allows night shifts for women only with employer-arranged safe transport and security." },
+    { who: "Families", why: "A child on the way home from school, a parent living alone, a daughter travelling late." },
+  ],
+  pilot: [
+    "5 Delhi NCR societies + 1 workplace, free for 60 days",
+    "Verify responders with the RWA: guards, resident doctors and nurses, volunteers",
+    "One mock SOS drill per society",
+    "Measure: time to first claim, time to arrival, SOS closed, false alarms, active users",
+    "Interview residents every 2 weeks: who uses it most, what's missing",
+  ],
+  built: [
+    { day: "Before the Buildathon (15–17 Nov)", items: ["Idea submitted", "Core SOS + incident timeline on FastAPI and PostgreSQL", "Gemini triage with a safety-rules floor and model fallback", "Gemini embeddings + pgvector protocol search"] },
+    { day: "Buildathon day 1 (20 Nov)", items: ["Jugnu: a Gemini agent with 9 tools and Confirm-before-act", "Live community map with demo dispatch and privacy masking", "Staff priority override with a logged reason", "Android APK build pipeline"] },
+    { day: "Buildathon day 2 (21 Nov)", items: ["Deployed: Cloud Build → Cloud Run, Cloud SQL, Secret Manager, Firebase Hosting", "Women in Transit Safe Route score", "“Call 112 now” for critical cases", "Offline rules that understand Hinglish (bachao, chaku, saans nahi)", "Full app redesign with a phone tab bar"] },
+  ],
+  rejected: [
+    { what: "Face recognition", why: "Privacy (DPDP Act) and bias risk. Identity comes from the society account." },
+    { what: "24/7 camera and microphone recording", why: "Android blocks it in the background, and consent must be for a specific purpose. Planned instead: recording only while an SOS is active." },
+    { what: "The app calling 112 by itself", why: "Phones don't allow it. We open the dialer with 112 ready, and show it first for every critical case." },
+    { what: "A bigger Gemini model", why: "It timed out live. Flash-Lite answers a Hinglish SOS in ~2 s, and in an emergency speed matters more than depth." },
+    { what: "Letting the AI lower a priority", why: "The AI can only raise it above the safety rules. Staff can override, with a written reason in the audit log." },
+  ],
+};

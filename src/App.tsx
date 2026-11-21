@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import {
-  ArrowRight, ArrowUpRight, BookOpen, Check, Cloud, Database, FileCode2, Github, KeyRound, Languages,
-  Linkedin, Lock, Minus, Rocket, Server, ShieldCheck, Siren, Sparkles, TestTube2, Timer, Zap,
+  ArrowRight, ArrowUpRight, Award, BookOpen, Building2, Check, Cloud, Database, Github, KeyRound, Languages,
+  Linkedin, Lock, Menu, Minus, Rocket, Server, ShieldCheck, Siren, Sparkles, TestTube2, Timer, X, XCircle, Zap,
 } from "lucide-react";
-import { COMPARE, DOCS, FLOW, GOOGLE_PRODUCTS, LINKS, MARKET, PRICING, PROBLEMS, ROADMAP, STATS, TEAM, type ProductStatus } from "./data/content";
-import { Counter, Logo, Reveal, SectionHead, Shapes, Spotlight, ThemeToggle, TONE, useTheme } from "./components/ui";
+import { ACHIEVEMENTS, COMPANY, COMPARE, DOCS, FLOW, GOOGLE_PRODUCTS, LINKS, MARKET, PRICING, PROBLEMS, RESEARCH, ROADMAP, STATS, TEAM, type ProductStatus } from "./data/content";
+import { Counter, Logo, Mark, Reveal, SectionHead, Shapes, Spotlight, ThemeToggle, TONE, useTheme } from "./components/ui";
 import { ProductDemo } from "./components/PhoneDemo";
 import { Explore } from "./components/Explore";
 import { useLive, type LiveState } from "./components/live";
@@ -19,7 +19,7 @@ const EXAMPLES: { key: keyof typeof recorded.results.triage; label: string }[] =
   { key: "streetlight", label: "English · hazard" },
 ];
 
-const NAV = [["Problem", "#problem"], ["Gemini", "#gemini"], ["Live demo", "#demo"], ["Google Cloud", "#cloud"], ["Proof", "#proof"], ["Business", "#business"], ["Team", "#team"], ["Pitch", "/pitch"]];
+const NAV = [["Product", "#demo"], ["Gemini", "#gemini"], ["Proof", "#proof"], ["Business", "#business"], ["Research", "#research"], ["Achievements", "#achievements"], ["Team", "#team"]];
 const TICKER = ["Gemini · structured JSON", "gemini-embedding-001 · 768 dims", "Cloud Run", "Cloud SQL · PostgreSQL 16", "pgvector · HNSW", "Secret Manager", "Cloud Build", "Firebase Hosting", "Google AI Studio", "Google Antigravity", "English · Hindi · Hinglish", "85 tests · 0 mocks"];
 const PRIO: Record<string, string> = { P1_CRITICAL: "text-g-red", P2_HIGH: "text-[#e37400] dark:text-g-yellow", P3_MODERATE: "text-brand", P4_ADVISORY: "text-ink-3" };
 const pretty = (p?: string) => (p ?? "").replace("_", " · ");
@@ -38,20 +38,57 @@ function LivePill({ live }: { live: LiveState }) {
 }
 
 function Nav({ live, dark, toggle }: { live: LiveState; dark: boolean; toggle: () => void }) {
+  const [open, setOpen] = useState(false);
   return (
     <header className="sticky top-0 z-50 border-b border-line/70 bg-bg/80 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-4 sm:px-6">
-        <a href="#top" aria-label="NSIN home"><Logo /></a>
-        <nav className="ml-2 hidden items-center gap-1 xl:flex">
-          {NAV.map(([l, h]) => <a key={h} href={h} className="rounded-full px-3 py-1.5 text-sm text-ink-2 transition hover:bg-surface-2 hover:text-ink">{l}</a>)}
+      <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6">
+        <a href="#top" aria-label="NSIN home" className="shrink-0"><Logo /></a>
+        <nav className="ml-4 hidden items-center gap-0.5 xl:flex">
+          {NAV.map(([l, h]) => <a key={h} href={h} className="whitespace-nowrap rounded-full px-3 py-1.5 text-sm text-ink-2 transition hover:bg-surface-2 hover:text-ink">{l}</a>)}
         </nav>
-        <div className="ml-auto flex items-center gap-2">
-          <span className="hidden lg:block"><LivePill live={live} /></span>
+        <div className="ml-auto flex shrink-0 items-center gap-2">
+          <span className="hidden 2xl:block"><LivePill live={live} /></span>
           <ThemeToggle dark={dark} toggle={toggle} />
-          <a href={LINKS.repo} target="_blank" rel="noreferrer" className="hidden items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-medium text-brand-ink sm:inline-flex"><Github className="h-4 w-4" />Source</a>
+          <a href="/pitch" className="hidden whitespace-nowrap rounded-full border border-line bg-surface px-4 py-2 text-sm font-semibold sm:inline-flex">Pitch</a>
+          <a href={LINKS.site} target="_blank" rel="noreferrer" className="hidden items-center gap-1.5 whitespace-nowrap rounded-full bg-brand px-4 py-2 text-sm font-semibold text-brand-ink sm:inline-flex">Open the app <ArrowUpRight className="h-4 w-4" /></a>
+          <button onClick={() => setOpen((v) => !v)} aria-label="Menu" aria-expanded={open} className="rounded-full border border-line bg-surface p-2 xl:hidden">
+            {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+          </button>
         </div>
       </div>
+      <AnimatePresence>
+        {open && (
+          <motion.nav initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+            className="border-t border-line bg-bg px-4 pb-4 pt-2 xl:hidden">
+            <div className="mx-auto grid max-w-7xl grid-cols-2 gap-1 sm:grid-cols-4">
+              {[...NAV, ["Pitch", "/pitch"]].map(([l, h]) => (
+                <a key={h} href={h} onClick={() => setOpen(false)} className="rounded-xl px-3 py-2.5 text-sm font-medium text-ink-2 hover:bg-surface-2 hover:text-ink">{l}</a>
+              ))}
+            </div>
+            <a href={LINKS.site} target="_blank" rel="noreferrer" className="mx-auto mt-2 flex max-w-7xl items-center justify-center gap-1.5 rounded-xl bg-brand py-3 text-sm font-semibold text-brand-ink sm:hidden">Open the app <ArrowUpRight className="h-4 w-4" /></a>
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </header>
+  );
+}
+
+/** Who we are, in one quiet line (credibility, not decoration). */
+function Credibility() {
+  const items = [
+    { icon: <Shapes className="h-3.5 w-3.5" />, text: COMPANY.team },
+    { icon: <Building2 className="h-3.5 w-3.5 text-brand" />, text: COMPANY.startup },
+    { icon: <Award className="h-3.5 w-3.5 text-g-yellow" />, text: `${COMPANY.incubator} · ${COMPANY.hub}` },
+  ];
+  return (
+    <div className="mt-8 flex flex-wrap items-center gap-2">
+      {items.map((i) => (
+        <span key={i.text} className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1 text-xs text-ink-2">{i.icon}{i.text}</span>
+      ))}
+      <a href="#research" className="inline-flex items-center gap-1.5 rounded-full bg-g-green-soft px-3 py-1 text-xs font-medium text-g-green">
+        <Timer className="h-3.5 w-3.5" />Built further in the 2 Buildathon days
+      </a>
+    </div>
   );
 }
 
@@ -84,7 +121,7 @@ function GeminiCard() {
             <motion.div key={idx} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="mt-4 grid gap-3">
               <div className="grid grid-cols-2 gap-3">
                 <div className="rounded-2xl border border-line p-3">
-                  <p className="text-[11px] text-ink-3">Keyword rules alone</p>
+                  <p className="text-[11px] text-ink-3">Keyword rules alone · {recorded.recorded_at.slice(5, 10)}</p>
                   <p className={`mt-1 font-semibold ${PRIO[o.rule_priority ?? ""]}`}>{pretty(o.rule_priority)}</p>
                 </div>
                 <div className="rounded-2xl border border-g-red/40 bg-g-red-soft p-3">
@@ -133,7 +170,8 @@ function Hero({ live }: { live: LiveState }) {
             <a href="#demo" className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-6 py-3.5 text-[15px] font-semibold">Try the app</a>
             <a href={LINKS.repo} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full px-4 py-3.5 text-[15px] font-medium text-ink-2 hover:text-ink"><Github className="h-4 w-4" />Source</a>
           </motion.div>
-          <div className="mt-12 grid max-w-xl grid-cols-2 gap-6 sm:grid-cols-4">
+          <Credibility />
+          <div className="mt-10 grid max-w-xl grid-cols-2 gap-6 sm:grid-cols-4">
             {STATS.map((s) => (
               <div key={s.label}>
                 <p className="text-3xl font-semibold tracking-tight"><Counter to={s.value} suffix={s.suffix} /></p>
@@ -417,11 +455,114 @@ function Business() {
   );
 }
 
+function Research() {
+  const R = RESEARCH;
+  return (
+    <section id="research" className="mx-auto max-w-7xl px-4 py-28 sm:px-6">
+      <SectionHead num="08" label="Research" title="What we found," dim="what we built, and what we said no to." />
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {R.found.map((f, i) => (
+          <Reveal key={f.n} delay={i * 0.05}>
+            <a href={f.href} target="_blank" rel="noreferrer" className="card group block h-full p-6 transition hover:-translate-y-0.5">
+              <p className="text-3xl font-semibold tracking-tight">{f.n}</p>
+              <p className="mt-2 text-sm leading-relaxed text-ink-2">{f.t}</p>
+              <p className="mt-4 inline-flex items-center gap-1 font-mono text-[11px] text-ink-3 group-hover:text-brand">{f.src}<ArrowUpRight className="h-3 w-3" /></p>
+            </a>
+          </Reveal>
+        ))}
+      </div>
+
+      <div className="mt-6 grid gap-4 lg:grid-cols-2">
+        <Reveal>
+          <div className="card h-full p-7">
+            <p className="font-mono text-[11px] uppercase tracking-widest text-brand">Who needs it most</p>
+            <div className="mt-4 grid gap-3">
+              {R.segments.map((s) => (
+                <div key={s.who} className="rounded-2xl bg-surface-2 p-4">
+                  <p className="font-semibold">{s.who} {"first" in s && s.first && <span className="ml-1 rounded-full bg-brand-soft px-2 py-0.5 text-[10px] font-semibold text-brand">FIRST CUSTOMER</span>}</p>
+                  <p className="mt-1 text-sm text-ink-2">{s.why}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+        <Reveal delay={0.08}>
+          <div className="card h-full p-7">
+            <p className="font-mono text-[11px] uppercase tracking-widest text-g-green">The pilot: how we'll learn</p>
+            <ul className="mt-4 grid gap-2.5">
+              {R.pilot.map((p) => <li key={p} className="flex gap-2.5 text-sm text-ink-2"><Check className="mt-0.5 h-4 w-4 shrink-0 text-g-green" />{p}</li>)}
+            </ul>
+            <p className="mt-5 text-xs text-ink-3">We double down on the group that uses it most, before adding anything else.</p>
+          </div>
+        </Reveal>
+      </div>
+
+      <Reveal>
+        <div className="card mt-6 p-7">
+          <p className="font-mono text-[11px] uppercase tracking-widest text-g-red">How we built it</p>
+          <div className="mt-5 grid gap-6 md:grid-cols-3">
+            {R.built.map((d, i) => (
+              <div key={d.day} className="relative border-l-2 pl-5" style={{ borderColor: ["var(--line)", "#1a73e8", "#34a853"][i] }}>
+                <p className="font-semibold">{d.day}</p>
+                <ul className="mt-2 grid gap-1.5">
+                  {d.items.map((t) => <li key={t} className="text-sm leading-snug text-ink-2">{t}</li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <p className="mt-5 text-xs text-ink-3">Every step is in the public commit history of the repo.</p>
+        </div>
+      </Reveal>
+
+      <Reveal>
+        <div className="card mt-6 p-7">
+          <p className="font-mono text-[11px] uppercase tracking-widest text-ink-3">What we said no to, and why</p>
+          <div className="mt-4 grid gap-3 md:grid-cols-2">
+            {R.rejected.map((r) => (
+              <div key={r.what} className="flex gap-3 rounded-2xl bg-surface-2 p-4">
+                <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-g-red" />
+                <div><p className="font-semibold">{r.what}</p><p className="mt-1 text-sm text-ink-2">{r.why}</p></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
+function Achievements() {
+  return (
+    <section id="achievements" className="border-t border-line bg-bg-2">
+      <div className="mx-auto max-w-7xl px-4 py-28 sm:px-6">
+        <SectionHead num="09" label="Achievements" title="Tested in front of juries" dim="before this one." />
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {ACHIEVEMENTS.map((x, i) => (
+            <Reveal key={x.event} delay={i * 0.06}>
+              <figure className="card group h-full overflow-hidden">
+                <div className="aspect-[4/3] overflow-hidden bg-surface-2">
+                  <img src={x.photo} alt={`${x.title}: ${x.event}`} loading="lazy" className={`h-full w-full transition duration-500 group-hover:scale-[1.03] ${"fit" in x ? "bg-white object-contain p-2" : "object-cover object-top"}`} />
+                </div>
+                <figcaption className="p-5">
+                  <p className={`inline-flex items-center gap-1.5 text-sm font-semibold ${TONE[x.tone].text}`}><Award className="h-4 w-4" />{x.title}</p>
+                  <p className="mt-1 text-lg font-semibold leading-snug">{x.event}</p>
+                  <p className="mt-1 text-xs text-ink-3">{x.by}</p>
+                </figcaption>
+              </figure>
+            </Reveal>
+          ))}
+        </div>
+        <p className="mt-6 text-center text-xs text-ink-3">{COMPANY.startup} · {COMPANY.team}</p>
+      </div>
+    </section>
+  );
+}
+
 function Team() {
   return (
     <section id="team" className="border-y border-line bg-bg-2">
       <div className="mx-auto max-w-7xl px-4 py-28 sm:px-6">
-        <SectionHead num="08" label="Team Task Force 141" title="Three founders." dim="Product, deep tech and the ground." />
+        <SectionHead num="10" label="Team Task Force 141" title="Three founders." dim="Product, deep tech and the ground." />
         <div className="grid gap-4 md:grid-cols-3">
           {TEAM.map((m, i) => (
             <Reveal key={m.name} delay={i * 0.08}>
@@ -444,7 +585,7 @@ function Team() {
 function Closing() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-28 sm:px-6">
-      <SectionHead num="09" label="Read more" title="Every decision" dim="is written down." />
+      <SectionHead num="11" label="Read more" title="Every decision" dim="is written down." />
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {DOCS.map((d, i) => (
           <Reveal key={d.title} delay={(i % 3) * 0.06}>
@@ -492,14 +633,19 @@ export default function App() {
         <CloudSection />
         <Proof live={live} />
         <Business />
+        <Research />
+        <Achievements />
         <Team />
         <Closing />
       </main>
       <footer className="border-t border-line">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-10 text-sm text-ink-3 sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <Logo />
-          <p className="inline-flex items-center gap-2"><Shapes className="h-4 w-4" />Startup Buildathon India 2026 · Team Task Force 141 · Open source</p>
-          <div className="flex gap-4"><a href={LINKS.repo} className="inline-flex items-center gap-1 hover:text-ink"><FileCode2 className="h-4 w-4" />Code</a><a href={LINKS.site} className="inline-flex items-center gap-1 hover:text-ink"><Github className="h-4 w-4" />Site</a></div>
+          <p className="inline-flex flex-wrap items-center gap-2"><Shapes className="h-4 w-4" />Startup Buildathon India 2026 · {COMPANY.team} · {COMPANY.startup} · {COMPANY.incubator}</p>
+          <div className="flex gap-4">
+            <a href={LINKS.repo} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 hover:text-ink"><Github className="h-4 w-4" />Code</a>
+            <a href={LINKS.site} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 hover:text-ink"><Mark className="h-4 w-4" />Live app</a>
+          </div>
         </div>
       </footer>
     </div>

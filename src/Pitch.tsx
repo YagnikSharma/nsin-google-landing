@@ -196,8 +196,19 @@ function LivePitch() {
 }
 
 export default function Pitch() {
-  const [tab, setTab] = useState<"deck" | "live">(() => (location.hash === "#live" ? "live" : "deck"));
-  useEffect(() => { history.replaceState(null, "", tab === "live" ? "#live" : "#deck"); }, [tab]);
+  // Each tab is a real browser-history step: Back always returns to the view you came from.
+  const fromHash = (): "deck" | "live" => (location.hash === "#live" ? "live" : "deck");
+  const [tab, setTabState] = useState<"deck" | "live">(fromHash);
+  const setTab = (t: "deck" | "live") => {
+    if (t === tab) return;
+    history.pushState(null, "", t === "live" ? "#live" : "#deck");
+    setTabState(t);
+  };
+  useEffect(() => {
+    const sync = () => setTabState(fromHash());
+    window.addEventListener("popstate", sync);
+    return () => window.removeEventListener("popstate", sync);
+  }, []);
   return (
     <div className="min-h-screen bg-bg text-ink">
       <header className="sticky top-0 z-50 border-b border-line/70 bg-bg/80 backdrop-blur-xl">

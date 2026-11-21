@@ -21,22 +21,36 @@ const SCENARIOS: Scenario[] = [
 export function Explore({ live }: { live: LiveState }) {
   const [active, setActive] = useState<Scenario>(SCENARIOS[0]);
   const [output, setOutput] = useState<unknown>(recorded.results[SCENARIOS[0].id]);
-  const [source, setSource] = useState<"recorded" | "live">("recorded");
+  const [source, setSource] = useState<"recorded" | "live" | "fallback">("recorded");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const pick = (s: Scenario) => { setActive(s); setOutput(recorded.results[s.id]); setSource("recorded"); setError(null); };
 
+  // Always does something useful: the real backend if it answers within 12 s, otherwise the
+  // recorded real run of the same call (clearly labelled), never just an error.
   const runLive = async () => {
-    if (!live.config) return;
     setLoading(true); setError(null);
+    const fallback = (why: string) => {
+      setOutput(recorded.results[active.id]); setSource("fallback");
+      setError(`${why} Showing the recorded real run of this exact call instead.`);
+    };
     try {
-      const data = active.path === "/health"
-        ? await fetch(`${live.config.apiUrl}/health`).then((r) => r.json())
-        : await liveCall(live.config.apiUrl, active.path, active.method === "POST" ? { method: "POST", body: JSON.stringify(active.body) } : undefined);
+      const apiUrl = live.config?.apiUrl
+        ?? (await fetch("/live.json", { cache: "no-store" }).then((r) => r.json()).catch(() => ({})))?.apiUrl;
+      if (!apiUrl) { fallback("The live service address isn't available."); return; }
+      const timeout = new Promise<never>((_, rej) => setTimeout(() => rej(new Error("timeout")), 12000));
+      const call = active.path === "/health"
+        ? fetch(`${apiUrl}/health`).then((r) => r.json())
+        : liveCall(apiUrl, active.path, active.method === "POST" ? { method: "POST", body: JSON.stringify(active.body) } : undefined);
+      const data = await Promise.race([call, timeout]);
+      if (!data || (typeof data === "object" && "detail" in (data as object) && Object.keys(data as object).length === 1)) {
+        fallback("The live service returned an error.");
+        return;
+      }
       setOutput(data); setSource("live");
     } catch (e) {
-      setError(`Live call failed: ${(e as Error).message}`);
+      fallback((e as Error).message === "timeout" ? "The live service took longer than 12 s (it may be waking up)." : "The live service couldn't be reached from this network.");
     } finally { setLoading(false); }
   };
 
@@ -56,16 +70,16 @@ export function Explore({ live }: { live: LiveState }) {
           <code className="truncate font-mono text-xs text-ink-2">{active.method} {active.path}</code>
           <div className="flex items-center gap-2">
             {source === "live"
-              ? <span className="inline-flex items-center gap-1.5 rounded-full bg-haven/15 px-2.5 py-1 font-mono text-[11px] text-haven"><Radio className="h-3 w-3" /> live response</span>
-              : <span className="inline-flex items-center gap-1.5 rounded-full bg-surface-2 px-2.5 py-1 font-mono text-[11px] text-ink-2"><Archive className="h-3 w-3" /> recorded {recorded.recorded_at}</span>}
-            <button onClick={runLive} disabled={live.status !== "live" || loading}
-              title={live.status === "live" ? "Call the real backend now" : "The live backend is offline right now"}
+              ? <span className="inline-flex items-center gap-1.5 rounded-full bg-haven/15 px-2.5 py-1 font-mono text-[11px] text-haven"><Radio className="h-3 w-3" /> live response · just now</span>
+              : <span className="inline-flex items-center gap-1.5 rounded-full bg-surface-2 px-2.5 py-1 font-mono text-[11px] text-ink-2"><Archive className="h-3 w-3" /> {source === "fallback" ? "fallback · " : ""}recorded real run {recorded.recorded_at}</span>}
+            <button onClick={runLive} disabled={loading}
+              title="Call the real backend now (falls back to the recorded real run if it doesn't answer)"
               className="inline-flex items-center gap-1.5 rounded-lg bg-brand px-3 py-1.5 text-xs font-semibold text-brand-ink disabled:cursor-not-allowed disabled:opacity-40">
               {loading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Play className="h-3.5 w-3.5" />} Run live
             </button>
           </div>
         </div>
-        {error && <p className="px-4 pt-3 text-xs text-sos">{error}</p>}
+        {error && <p className="px-4 pt-3 text-xs text-[#b06000] dark:text-g-yellow">{error}</p>}
         <motion.pre key={`${active.id}-${source}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           className="max-h-[440px] overflow-auto p-4 font-mono text-[12px] leading-relaxed text-ink-2">
           {JSON.stringify(output, null, 2)}
